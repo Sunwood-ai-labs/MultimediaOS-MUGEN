@@ -1,222 +1,273 @@
 <div align="center">
 
-<img src="assets/header.svg" alt="fal-ai-multimedia-workspace Header" width="800"/>
+<img src="assets/header.png" alt="MultimediaOS CC Header" width="800"/>
 
-### fal.ai APIを使ったマルチメディア制作ワークスペース
+### マルチメディア制作のためのオペレーティングシステム - Claude Code Edition
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-View-success?style=flat-square&logo=github)](https://github.com/Sunwood-ai-labs/fal-ai-multimedia-workspace)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![fal.ai](https://img.shields.io/badge/fal.ai-API-purple?style=flat-square)](https://fal.ai)
 
-画像生成・動画制作・画像編集をClaude Codeとfal.ai APIで行うマルチメディア制作ワークスペース。
+創造性を解き放つ、AI搭載のマルチメディア制作環境。
 
 </div>
 
 ---
 
-## ✨ 概要
+## ? What is MultimediaOS?
 
-`fal-ai-multimedia-workspace` は、fal.ai APIを使ったマルチメディア制作を効率的に行うためのClaude Codeワークスペースです。
+**MultimediaOS CC**（Claude Code Edition）は、マルチメディア制作のための**オペレーティングシステム**です。
 
-- **画像生成**: Qwen Image 2512で高品質な画像を生成
-- **動画制作**: LTX-2で画像から動画を作成
-- **画像編集**: Qwen Image Editで既存の画像を編集
+単なるツールセットではなく、創造的な作業を効率化するための**統合プラットフォーム**。
 
-Claude Code Skillsと組み合わせることで、自然言語で指示を出すだけでプロフェッショナルなマルチメディアコンテンツを作成できます。
+```
+┌─────────────────────────────────────────────────────────┐
+│                    MultimediaOS                         │
+├─────────────────────────────────────────────────────────┤
+│  CLI Shell (Claude Code)                                │
+│  ┌─────────┬─────────┬─────────┬─────────────────┐     │
+│  │  Image  │  Video  │  Edit   │   Projects      │     │
+│  │  Gen    │  Gen    │  Image  │   Manager       │     │
+│  └─────────┴─────────┴─────────┴─────────────────┘     │
+│           └───────────────┬───────────────────┘         │
+│                           ▼                             │
+│              AI Engine (fal.ai API)                     │
+│              ┌─────────┬─────────┬─────────┐           │
+│              │  Qwen   │  LTX-2  │  LTX-2  │           │
+│              │ Image   │ Video   │ 19B     │           │
+│              └─────────┴─────────┴─────────┘           │
+└─────────────────────────────────────────────────────────┘
+```
 
----
-
-## 📦 特徴
-
-<div align="center">
+### OSとしての機能
 
 | 機能 | 説明 |
 |:------:|------|
-| **画像生成** | テキストプロンプトから高品質な画像を生成 |
-| **動画制作** | 画像から動画を自動生成 |
-| **画像編集** | 既存の画像を自然言語で編集 |
-| **Claude Code統合** | スラッシュコマンドで操作可能 |
+| **ファイルシステム** | プロジェクト別に制作環境を管理 |
+| **CLIシェル** | 自然言語でシステムを操作 |
+| **アプリケーション** | 画像生成、動画制作、画像編集 |
+| **AIエンジン** | fal.ai APIによる高度な生成 |
+
+---
+
+## ✨ Features
+
+<div align="center">
+
+### ? Image Generation
+
+テキストから高品質な画像を生成。
+
+**Model:** Qwen Image 2512
+- リアルなテクスチャ生成
+- 正確なテキスト描画
+- 16:9ワイドスクリーン対応
+
+```bash
+/fal-ai generate-image "A serene Japanese garden at sunset" --size landscape_16_9
+```
+
+---
+
+### ? Video Production
+
+画像から動く動画を自動生成。
+
+**Model:** LTX-2 / LTX-2 19B Distilled
+- 高速な動画生成
+- カメラ移動の制御
+- 音声付き動画生成対応
+
+```bash
+/fal-ai image-to-video photo.jpg --duration 5 --fps 24
+
+# 音声付き動画
+/fal-ai image-to-video-audio photo.jpg --prompt "Camera slowly zooms in"
+```
+
+---
+
+### ? Image Editing
+
+既存の画像を自然言語で編集。
+
+**Model:** Qwen Image Edit 2511
+- 直感的な編集指示
+- 編集の強さを調整可能
+- 自然な結果
+
+```bash
+/fal-ai edit-image photo.jpg "Make the sky blue and add clouds"
+```
 
 </div>
 
 ---
 
-## 🚀 セットアップ
+## ? Architecture
 
-### 要件
+```
+MultimediaOS/
+├── kernel/                     # OSコア（Claude Code Skills）
+│   └── .claude/skills/fal-ai/
+│       ├── SKILL.md            # スキル定義
+│       ├── scripts/            # アプリケーション
+│       │   ├── generate-image.ts
+│       │   ├── edit-image.ts
+│       │   ├── image-to-video.ts
+│       │   └── image-to-video-audio.ts
+│       └── references/         # リファレンス資料
+│
+├── filesystem/                 # ファイルシステム
+│   ├── projects/               # プロジェクトディレクトリ
+│   │   └── my-project/
+│   │       ├── inputs/         # 入力素材
+│   │       ├── outputs/        # 生成物
+│   │       └── prompts.md      # プロンプト履歴
+│   └── outputs/                # グローバル出力
+│       ├── images/
+│       └── videos/
+│
+├── assets/                     # システムリソース
+│   └── header.svg              # OSロゴ
+│
+└── .env                        # システム設定（APIキー）
+```
+
+---
+
+## ? Installation
+
+### Requirements
 
 - Node.js 20+
 - pnpm
-- fal.ai APIキー
+- fal.ai API Key
+- Claude Code
 
-### インストール
+### Setup
 
-1. リポジトリをクローン
+1. **リポジトリをクローン**
 
 ```bash
 git clone https://github.com/Sunwood-ai-labs/fal-ai-multimedia-workspace.git
 cd fal-ai-multimedia-workspace
 ```
 
-2. Claude Code Skillsのセットアップ
+2. **APIキーを設定**
 
 ```bash
-# Skillsディレクトリにfal-aiスキルを作成
-mkdir -p .claude/skills/fal-ai
-```
-
-3. 環境変数の設定
-
-```bash
-# .envファイルを作成
 cp .env.example .env
-
-# .envファイルにAPIキーを設定
-# FAL_KEY=your_api_key_here
+# .envファイルにFAL_KEYを追加
 ```
 
-4. 依存関係のインストール
+3. **依存関係をインストール**
 
 ```bash
-# Skillsスクリプト用の依存関係をインストール
 cd .claude/skills/fal-ai/scripts
 pnpm install
 ```
 
----
+4. **Claude Codeでスキルを読み込み**
 
-## 📁 構造
+```bash
+# Claude Codeを起動
+claude
 
-```
-fal-ai-multimedia-workspace/
-├── .claude/
-│   └── skills/
-│       └── fal-ai/              # fal.aiスキル
-│           ├── SKILL.md
-│           ├── references/
-│           └── scripts/
-├── assets/                      # ヘッダー画像等
-├── outputs/                     # 生成物の保存場所
-│   ├── images/                 # 生成画像
-│   └── videos/                 # 生成動画
-├── projects/                    # プロジェクト別の作業ディレクトリ
-├── .env.example                 # 環境変数テンプレート
-├── .gitignore
-├── README.md
-└── LICENSE
+# スキルが自動的に読み込まれます
 ```
 
 ---
 
-## 📖 使用法
+## ? Usage
 
-### Claude Codeで実行
+### CLIから実行
+
+MultimediaOSは、Claude CodeのCLIから操作できます。
 
 ```bash
 # 画像生成
-/fal-ai generate-image "A beautiful sunset over mountains" --size landscape_16_9
+/fal-ai generate-image "A futuristic city at night" --size landscape_16_9
 
 # 画像編集
-/fal-ai edit-image photo.jpg "Make the sky blue and cloudy"
+/fal-ai edit-image assets/photo.jpg "Change the mood to cyberpunk"
 
 # 動画生成
-/fal-ai image-to-video photo.jpg --duration 5 --fps 24
+/fal-ai image-to-video outputs/images/generated/photo.png --duration 5
+
+# 音声付き動画
+/fal-ai image-to-video-audio photo.jpg --prompt "Cinematic pan from left to right"
 ```
 
-### スクリプト直接実行
+### プロジェクト管理
+
+プロジェクトごとに制作環境を分けることができます。
 
 ```bash
-# 画像生成
-node .claude/skills/fal-ai/scripts/generate-image.ts "A beautiful sunset" --size landscape_16_9
-
-# 画像編集
-node .claude/skills/fal-ai/scripts/edit-image.ts photo.jpg "Make the sky blue"
-
-# 動画生成
-node .claude/skills/fal-ai/scripts/image-to-video.ts photo.jpg --duration 5
+mkdir -p projects/my-new-project/{inputs,outputs}
+cd projects/my-new-project
+# プロジェクト内で制作開始
 ```
 
 ---
 
-## 🎨 プロジェクト構成
+## ? Models
 
-### outputs/
-
-生成された画像や動画を保存するディレクトリです。
-
-```
-outputs/
-├── images/
-│   ├── generated/              # 生成された画像
-│   └── edited/                 # 編集された画像
-└── videos/
-    └── generated/              # 生成された動画
-```
-
-### projects/
-
-プロジェクト別に作業ディレクトリを管理できます。
-
-```
-projects/
-└── my-project/
-    ├── inputs/                 # 入力画像
-    ├── outputs/                # 出力ファイル
-    └── prompts/                # プロンプトの記録
-```
+| Model | Type | Description |
+|:------|:-----|:-----------|
+| **Qwen Image 2512** | Image Generation | 高品質な画像生成、正確なテキスト描画 |
+| **Qwen Image Edit 2511** | Image Editing | 自然言語による画像編集 |
+| **LTX-2** | Video Generation | 高速な画像→動画変換 |
+| **LTX-2 19B Distilled** | Video + Audio | 音声付き動画生成、カメラ制御 |
 
 ---
 
-## 🔧 fal.ai モデル
+## ? Roadmap
 
-### Qwen Image 2512 (画像生成)
-
-- モデルID: `fal-ai/qwen-image-2512/lora`
-- LoRA推論エンドポイント
-- 高品質なテキスト描画、リアルなテクスチャ生成
-
-### Qwen Image Edit 2511 (画像編集)
-
-- モデルID: `fal-ai/qwen-image-edit-2511/lora`
-- 自然言語で画像を編集
-- 編集の強さを調整可能
-
-### LTX-2 (動画生成)
-
-- モデルID: `fal-ai/ltx-2/image-to-video/fast`
-- 画像から動画を高速生成
-- カスタムの動きをプロンプトで指定可能
+- [ ] プロジェクト管理コマンドの追加
+- [ ] プロンプトテンプレートシステム
+- [ ] バッチ処理対応
+- [ ] GUIフロントエンド
+- [ ] プラグインシステム
 
 ---
 
-## 🤝 貢献
+## ? Contributing
 
-貢献を歓迎します！
+私たちと一緒にMultimediaOSを向上させましょう！
 
-1. リポジトリをフォーク
+1. フォークする
 2. ブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. コミット (`git commit -m 'Add amazing feature'`)
-4. プッシュ (`git push origin feature/amazing-feature`)
+3. コミットする (`git commit -m 'Add amazing feature'`)
+4. プッシュする (`git push origin feature/amazing-feature`)
 5. プルリクエストを作成
 
 ---
 
-## 📄 ライセンス
+## ? License
 
-MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-## 🙏 謝辞
+## ? Acknowledgments
 
 - [fal.ai](https://fal.ai) - API提供
 - [Claude Code](https://claude.com/claude-code) - コーディングアシスタント
+- [Qwen](https://qwenlm.github.io) - 画像生成・編集モデル
+- [Lightricks](https://lightricks.com) - LTX-2動画モデル
 
 ---
 
 <div align="center">
 
-Made with ❤️ by [Sunwood-ai-labs](https://github.com/Sunwood-ai-labs)
+**MultimediaOS CC** - 創造性を解き放つ、AI搭載のマルチメディア制作環境
+
+Made with ? by [Sunwood-ai-labs](https://github.com/Sunwood-ai-labs)
+
+[GitHub](https://github.com/Sunwood-ai-labs/fal-ai-multimedia-workspace) •
+[Issues](https://github.com/Sunwood-ai-labs/fal-ai-multimedia-workspace/issues) •
+[Discussions](https://github.com/Sunwood-ai-labs/fal-ai-multimedia-workspace/discussions)
 
 </div>

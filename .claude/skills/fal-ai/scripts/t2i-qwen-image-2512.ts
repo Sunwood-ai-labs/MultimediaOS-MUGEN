@@ -1,19 +1,34 @@
 #!/usr/bin/env tsx
 /**
- * generate-image.ts
+ * t2i-qwen-image-2512.ts
  *
- * fal.ai qwen-image-2512/lora モデルを使用して画像を生成するスクリプト
+ * MODEL: fal-ai/qwen-image-2512/lora
+ * TYPE: Text to Image (T2I)
+ *
+ * テキストプロンプトから画像を生成するスクリプト
  * 生成された画像は outputs/images/generated/ に保存されます
  *
  * 使用方法:
- *   node generate-image.ts "A beautiful sunset" --size landscape_16_9
- *   node generate-image.ts "A cat" --num 3 --format png
+ *   node t2i-qwen-image-2512.ts "A beautiful sunset" --size landscape_16_9
+ *   node t2i-qwen-image-2512.ts "A cat" --num 3 --format png
+ *
+ * パラメータ制約:
+ *   --size: square_hd | square | portrait_4_3 | portrait_16_9 | landscape_4_3 | landscape_16_9
+ *   --steps: 1-100 (デフォルト: 28)
+ *   --scale: 1-20 (デフォルト: 4)
+ *   --num: 1-4 (デフォルト: 1)
+ *   --format: jpeg | png | webp
+ *   --acceleration: none | regular | high
  */
 
 import { fal } from "@fal-ai/client";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+// .envファイルを読み込む
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

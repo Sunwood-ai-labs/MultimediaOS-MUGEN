@@ -1,19 +1,36 @@
 #!/usr/bin/env tsx
 /**
- * edit-image.ts
+ * i2i-qwen-image-edit-2511.ts
  *
- * fal.ai qwen-image-edit-2511/lora モデルを使用して画像を編集するスクリプト
+ * MODEL: fal-ai/qwen-image-edit-2511/lora
+ * TYPE: Image to Image (I2I)
+ *
+ * 既存の画像を編集するスクリプト
  * 編集された画像は outputs/images/edited/ に保存されます
  *
  * 使用方法:
- *   node edit-image.ts input.jpg "Make the sky blue"
- *   node edit-image.ts input.png "Add clouds" --strength 0.7
+ *   node i2i-qwen-image-edit-2511.ts input.jpg "Make the sky blue"
+ *   node i2i-qwen-image-edit-2511.ts input.png "Add clouds" --strength 0.7
+ *
+ * パラメータ制約:
+ *   入力画像: ローカルファイル または URL
+ *   image_urls: 配列形式で指定（内部処理）
+ *   --strength: 0.0-1.0 (デフォルト: 0.8)
+ *   --steps: 1-100 (デフォルト: 28)
+ *   --scale: 1-20 (デフォルト: 4)
+ *   --format: jpeg | png | webp
+ *
+ * 重要: モデルは image_urls (配列) を要求します
  */
 
 import { fal } from "@fal-ai/client";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+// .envファイルを読み込む
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

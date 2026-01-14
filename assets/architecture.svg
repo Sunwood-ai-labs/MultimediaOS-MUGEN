@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap');
+      .text { font-family: 'Inter', sans-serif; }
+      .title { font-size: 24px; font-weight: 700; fill: #1e293b; }
+      .subtitle { font-size: 14px; font-weight: 400; fill: #64748b; }
+      .box-text { font-size: 13px; font-weight: 600; fill: #1e293b; }
+      .small-text { font-size: 11px; font-weight: 400; fill: #475569; }
+      .header-bg { fill: url(#headerGradient); }
+      .cli-box { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 2; }
+      .app-box { fill: #e0e7ff; stroke: #6366f1; stroke-width: 2; }
+      .engine-box { fill: #f0fdf4; stroke: #22c55e; stroke-width: 2; }
+      .model-box { fill: #fef3c7; stroke: #f59e0b; stroke-width: 2; }
+      .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; }
+      .connector { stroke: #6366f1; stroke-width: 3; fill: none; }
+    </style>
+    <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#ffffff" />
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" class="text title">MultimediaOS CC Architecture</text>
+  <text x="400" y="55" text-anchor="middle" class="text subtitle">AI-Powered Multimedia Creation Platform</text>
+
+  <!-- Main Container -->
+  <rect x="50" y="80" width="700" height="380" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" />
+
+  <!-- OS Title -->
+  <text x="400" y="110" text-anchor="middle" class="text" style="font-size: 18px; font-weight: 700; fill: #6366f1;">MultimediaOS CC</text>
+
+  <!-- CLI Shell Section -->
+  <rect x="100" y="130" width="600" height="70" rx="8" class="cli-box" />
+  <text x="400" y="150" text-anchor="middle" class="text" style="font-size: 12px; font-weight: 600; fill: #64748b;">CLI Shell</text>
+  <text x="400" y="165" text-anchor="middle" class="text small-text">Claude Code</text>
+
+  <!-- Applications Row -->
+  <g transform="translate(130, 175)">
+    <!-- Image Gen -->
+    <rect x="0" y="0" width="100" height="50" rx="6" class="app-box" />
+    <text x="50" y="22" text-anchor="middle" class="text box-text">Image</text>
+    <text x="50" y="38" text-anchor="middle" class="text small-text">Generation</text>
+
+    <!-- Video Gen -->
+    <rect x="130" y="0" width="100" height="50" rx="6" class="app-box" />
+    <text x="180" y="22" text-anchor="middle" class="text box-text">Video</text>
+    <text x="180" y="38" text-anchor="middle" class="text small-text">Production</text>
+
+    <!-- Edit -->
+    <rect x="260" y="0" width="100" height="50" rx="6" class="app-box" />
+    <text x="310" y="22" text-anchor="middle" class="text box-text">Edit</text>
+    <text x="310" y="38" text-anchor="middle" class="text small-text">Image</text>
+
+    <!-- Projects -->
+    <rect x="390" y="0" width="100" height="50" rx="6" class="app-box" />
+    <text x="440" y="22" text-anchor="middle" class="text box-text">Projects</text>
+    <text x="440" y="38" text-anchor="middle" class="text small-text">Manager</text>
+  </g>
+
+  <!-- Connector Arrow -->
+  <line x1="400" y1="240" x2="400" y2="270" class="connector" marker-end="url(#arrowhead)" />
+
+  <!-- AI Engine Section -->
+  <rect x="100" y="280" width="600" height="80" rx="8" class="engine-box" />
+  <text x="400" y="300" text-anchor="middle" class="text" style="font-size: 12px; font-weight: 600; fill: #16a34a;">AI Engine</text>
+  <text x="400" y="315" text-anchor="middle" class="text small-text">fal.ai API</text>
+
+  <!-- Models Row -->
+  <g transform="translate(180, 330)">
+    <!-- Qwen Image -->
+    <rect x="0" y="0" width="110" height="45" rx="6" class="model-box" />
+    <text x="55" y="20" text-anchor="middle" class="text box-text" style="font-size: 11px;">Qwen</text>
+    <text x="55" y="35" text-anchor="middle" class="text small-text">Image 2512</text>
+
+    <!-- LTX-2 -->
+    <rect x="140" y="0" width="110" height="45" rx="6" class="model-box" />
+    <text x="195" y="20" text-anchor="middle" class="text box-text" style="font-size: 11px;">LTX-2</text>
+    <text x="195" y="35" text-anchor="middle" class="text small-text">Video</text>
+
+    <!-- LTX-2 19B -->
+    <rect x="280" y="0" width="110" height="45" rx="6" class="model-box" />
+    <text x="335" y="20" text-anchor="middle" class="text box-text" style="font-size: 11px;">LTX-2</text>
+    <text x="335" y="35" text-anchor="middle" class="text small-text">19B Distilled</text>
+  </g>
+
+  <!-- Footer Info -->
+  <g transform="translate(100, 420)">
+    <rect x="0" y="0" width="140" height="24" rx="4" fill="#6366f1" />
+    <text x="70" y="16" text-anchor="middle" class="text" style="font-size: 11px; font-weight: 600; fill: #ffffff;">TypeScript</text>
+
+    <rect x="160" y="0" width="100" height="24" rx="4" fill="#06b6d4" />
+    <text x="210" y="16" text-anchor="middle" class="text" style="font-size: 11px; font-weight: 600; fill: #ffffff;">Node.js</text>
+
+    <rect x="280" y="0" width="100" height="24" rx="4" fill="#22c55e" />
+    <text x="330" y="16" text-anchor="middle" class="text" style="font-size: 11px; font-weight: 600; fill: #ffffff;">pnpm</text>
+
+    <rect x="400" y="0" width="180" height="24" rx="4" fill="#f59e0b" />
+    <text x="490" y="16" text-anchor="middle" class="text" style="font-size: 11px; font-weight: 600; fill: #ffffff;">fal.ai API</text>
+  </g>
+
+  <!-- Copyright -->
+  <text x="400" y="480" text-anchor="middle" class="text small-text">© 2024 MultimediaOS CC | Sunwood AI Labs</text>
+</svg>

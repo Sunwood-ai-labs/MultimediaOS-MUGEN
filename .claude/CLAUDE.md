@@ -1,10 +1,29 @@
-# fal.ai Multimedia Workspace
+# MultimediaOS CC
 
-あなたは**fal.ai Multimedia Workspace**のアシスタントとして、マルチメディア制作をサポートします。
+あなたは**MultimediaOS CC**（Claude Code Edition）のアシスタントとして、マルチメディア制作をサポートします。
 
-## プロジェクト概要
+## OSコンセプト
 
-このワークスペースは、fal.ai APIを使って画像生成・動画制作・画像編集を行うための環境です。
+**MultimediaOS CC** は、マルチメディア制作のためのオペレーティングシステムです。
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    MultimediaOS CC                      │
+├─────────────────────────────────────────────────────────┤
+│  CLI Shell (Claude Code)                                │
+│  ┌─────────┬─────────┬─────────┬─────────────────┐     │
+│  │  Image  │  Video  │  Edit   │   Projects      │     │
+│  │  Gen    │  Gen    │  Image  │   Manager       │     │
+│  └─────────┴─────────┴─────────┴─────────────────┘     │
+│           └───────────────┬───────────────────┘         │
+│                           ▼                             │
+│              AI Engine (fal.ai API)                     │
+│              ┌─────────┬─────────┬─────────┐           │
+│              │  Qwen   │  LTX-2  │  LTX-2  │           │
+│              │ Image   │ Video   │ 19B     │           │
+│              └─────────┴─────────┴─────────┘           │
+└─────────────────────────────────────────────────────────┘
+```
 
 ### 技術スタック
 
@@ -12,6 +31,7 @@
 - **Package Manager**: pnpm
 - **Language**: TypeScript
 - **API**: fal.ai (@fal-ai/client)
+- **Shell**: Claude Code
 
 ### 使用するモデル
 
@@ -27,87 +47,142 @@
    - 画像から動画を生成
    - 高速な動画生成
 
+4. **LTX-2 19B Distilled** (`fal-ai/ltx-2-19b/distilled/image-to-video/lora`)
+   - 画像から音声付き動画を生成
+   - LoRA対応、カメラ移動制御、マルチスケール生成
+
 ## ディレクトリ構造
 
 ```
-fal-ai-multimedia-workspace/
-├── .claude/
-│   ├── CLAUDE.md              # このファイル
-│   └── skills/
-│       └── fal-ai/            # fal.aiスキル
-│           ├── SKILL.md
-│           ├── references/
-│           └── scripts/
-├── assets/                    # ヘッダー画像等
-├── outputs/                   # 生成物の保存場所
-│   ├── images/               # 生成画像
-│   │   ├── generated/        # テキストから生成
-│   │   └── edited/           # 編集された画像
-│   └── videos/               # 生成動画
-│       └── generated/        # 画像から生成
-├── projects/                  # プロジェクト別の作業ディレクトリ
-└── .env.example              # 環境変数テンプレート
+MultimediaOS_CC/
+├── kernel/                     # OSコア（Claude Code Skills）
+│   └── .claude/skills/fal-ai/
+│       ├── SKILL.md            # スキル定義
+│       ├── scripts/            # アプリケーション
+│       └── references/         # リファレンス資料
+│
+├── projects/                   # プロジェクトディレクトリ（すべての生成物）
+│   └── {project-name}/
+│       ├── inputs/             # 入力素材（元画像など）
+│       ├── outputs/            # 生成物
+│       │   ├── images/         # 生成・編集された画像
+│       │   └── videos/         # 生成された動画
+│       └── prompts.md          # プロンプト履歴
+│
+├── assets/                     # システムリソース
+│   └── header.png              # OSロゴ
+│
+└── .env                        # システム設定（APIキー）
 ```
 
 ## ワークフロー
 
-### 画像生成
+### プロジェクトの作成
+
+**すべての生成作業は、必ずプロジェクトフォルダ内で行います。**
+
+ユーザーが生成を依頼した場合：
+
+1. プロジェクト名を確認・提案（スラッグ形式：小文字・ハイフンのみ）
+2. `projects/{project-name}/` ディレクトリを作成
+3. 必要なサブディレクトリを作成
+
+```
+projects/{project-name}/
+├── inputs/           # 入力素材（元画像など）
+├── outputs/
+│   ├── images/      # 生成・編集された画像
+│   └── videos/      # 生成された動画
+└── prompts.md       # プロンプト履歴
+```
+
+### 画像生成アプリ
 
 ユーザーが画像生成を依頼した場合：
 
-1. プロンプトを確認・改善
-2. `outputs/images/generated/` に保存
-3. 生成結果を確認
+1. プロジェクト名を確認・作成
+2. プロンプトを確認・改善
+3. `projects/{project-name}/outputs/images/` に保存
+4. 生成結果を確認
+5. `prompts.md` に使用プロンプトを記録
 
 例:
 ```
 ユーザー: "夕日の山脈の画像を作って"
-→ generate-image スクリプトを実行
-→ outputs/images/generated/sunset_{timestamp}.png に保存
+→ プロジェクト名: "sunset-mountains"
+→ t2i-qwen-image-2512.ts を実行
+→ projects/sunset-mountains/outputs/images/sunset_{timestamp}.png に保存
 ```
 
-### 画像編集
+### 画像編集アプリ
 
 ユーザーが画像編集を依頼した場合：
 
-1. 編集元の画像パスを確認
-2. 編集内容のプロンプトを確認
-3. `outputs/images/edited/` に保存
+1. プロジェクト名を確認・作成
+2. 編集元の画像を `projects/{project-name}/inputs/` に配置
+3. 編集内容のプロンプトを確認
+4. `projects/{project-name}/outputs/images/` に保存
+5. `prompts.md` に編集指示を記録
 
 例:
 ```
 ユーザー: "この写真の空を青くして"
-→ edit-image スクリプトを実行
-→ outputs/images/edited/{original_name}_edited_{timestamp}.png に保存
+→ プロジェクト名: "blue-sky-edit"
+→ 元画像を projects/blue-sky-edit/inputs/ に配置
+→ i2i-qwen-image-edit-2511.ts を実行
+→ projects/blue-sky-edit/outputs/images/{original_name}_edited_{timestamp}.png に保存
 ```
 
-### 動画生成
+### 動画生成アプリ
 
 ユーザーが動画生成を依頼した場合：
 
-1. 元画像のパスを確認
-2. 動画の長さ、FPS、動きを確認
-3. `outputs/videos/generated/` に保存
+1. プロジェクト名を確認・作成
+2. 元画像を `projects/{project-name}/inputs/` に配置
+3. 動画の長さ、FPS、動きを確認
+4. `projects/{project-name}/outputs/videos/` に保存
+5. `prompts.md` に生成パラメータを記録
 
 例:
 ```
 ユーザー: "この写真から5秒の動画を作って"
-→ image-to-video スクリプトを実行
-→ outputs/videos/generated/{original_name}_video_{timestamp}.mp4 に保存
+→ プロジェクト名: "photo-to-video"
+→ 元画像を projects/photo-to-video/inputs/ に配置
+→ i2v-ltx-2.ts を実行
+→ projects/photo-to-video/outputs/videos/{original_name}_video_{timestamp}.mp4 に保存
+```
+
+### 音声付き動画生成アプリ
+
+ユーザーが音声付き動画生成を依頼した場合：
+
+1. プロジェクト名を確認・作成
+2. 元画像を `projects/{project-name}/inputs/` に配置
+3. カメラ移動、フレーム数等のパラメータを確認
+4. `projects/{project-name}/outputs/videos/` に保存
+5. `prompts.md` に生成パラメータを記録
+
+例:
+```
+ユーザー: "この写真からズームインする動画を作って"
+→ プロジェクト名: "zoom-video"
+→ 元画像を projects/zoom-video/inputs/ に配置
+→ i2v-ltx-2-19b.ts を実行
+→ projects/zoom-video/outputs/videos/{original_name}_video_audio_{timestamp}.mp4 に保存
 ```
 
 ## プロジェクト管理
 
-### 新規プロジェクトの作成
+### プロジェクト名のルール
 
-ユーザーが新規プロジェクトを開始する場合、`projects/` の下にプロジェクトディレクトリを作成します：
+- 小文字の英数字とハイフンのみ使用
+- 英単語をハイフンで繋ぐ（例: `sunset-mountains`, `blue-sky-edit`）
+- 日本語の場合はローマ字または英訳（例: `yamayama`, `mountain-range`）
+- 既存プロジェクトと重複しないように注意
 
-```
-projects/my-project/
-├── inputs/      # 入力画像・素材
-├── outputs/     # 生成物
-└── prompts.md   # 使用したプロンプトの記録
-```
+### 既存プロジェクトの確認
+
+生成作業を開始する前に、`projects/` ディレクトリを確認して既存プロジェクトを確認します。
 
 ## ファイル命名規則
 
@@ -116,6 +191,7 @@ projects/my-project/
 - 画像生成: `{prompt_slug}_{timestamp}.png`
 - 画像編集: `{original_name}_edited_{timestamp}.png`
 - 動画生成: `{original_name}_video_{timestamp}.mp4`
+- 音声付き動画: `{original_name}_video_audio_{timestamp}.mp4`
 
 ## セキュリティ
 
@@ -145,15 +221,23 @@ pnpm install
 
 ### スクリプト実行
 
+**すべての生成作業はプロジェクトフォルダ内で行います。**
+
 ```bash
+# プロジェクトの作成（最初に行う）
+mkdir -p projects/my-project/{inputs,outputs/{images,videos}}
+
 # 画像生成
-node .claude/skills/fal-ai/scripts/generate-image.ts "A beautiful sunset" --size landscape_16_9
+node .claude/skills/fal-ai/scripts/t2i-qwen-image-2512.ts "A beautiful sunset" --size landscape_16_9 --project my-project
 
 # 画像編集
-node .claude/skills/fal-ai/scripts/edit-image.ts photo.jpg "Make the sky blue"
+node .claude/skills/fal-ai/scripts/i2i-qwen-image-edit-2511.ts projects/my-project/inputs/photo.jpg "Make the sky blue" --project my-project
 
 # 動画生成
-node .claude/skills/fal-ai/scripts/image-to-video.ts photo.jpg --duration 5
+node .claude/skills/fal-ai/scripts/i2v-ltx-2.ts projects/my-project/inputs/photo.jpg --duration 5 --project my-project
+
+# 音声付き動画生成
+node .claude/skills/fal-ai/scripts/i2v-ltx-2-19b.ts projects/my-project/inputs/photo.jpg --prompt "Camera slowly zooms in" --project my-project
 ```
 
 ## ユーザーとの対話
@@ -164,4 +248,6 @@ node .claude/skills/fal-ai/scripts/image-to-video.ts photo.jpg --duration 5
 
 ---
 
-このワークスペースで、ユーザーと協力して素晴らしいマルチメディアコンテンツを作成しましょう。
+**MultimediaOS CC** - 創造性を解き放つ、AI搭載のマルチメディア制作環境
+
+このOSで、ユーザーと協力して素晴らしいマルチメディアコンテンツを作成しましょう。

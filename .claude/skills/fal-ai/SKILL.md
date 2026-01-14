@@ -13,6 +13,8 @@ triggers:
   - "動画を生成"
   - "image.*video"
   - "video.*generat"
+  - "音声付き動画"
+  - "audio.*video"
 ---
 
 # fal-ai Workspace Skill
@@ -24,6 +26,7 @@ fal.ai APIを使ってマルチメディアコンテンツを作成するワー�
 - **画像生成**: テキストプロンプトから画像を生成
 - **画像編集**: 既存の画像を編集
 - **動画生成**: 画像から動画を生成
+- **音声付き動画生成**: 画像から音声付き動画を生成（LTX-2 19B Distilled）
 
 ## 使用方法
 
@@ -48,6 +51,14 @@ fal.ai APIを使ってマルチメディアコンテンツを作成するワー�
 「この写真から動画を作って」
 「5秒間のアニメーションを生成して」
 ```
+
+### 音声付き動画生成
+
+```
+「この写真から音声付き動画を作って」
+「カメラをズームインする動画を生成して」
+```
+
 
 ## ワークフロー
 
@@ -75,6 +86,14 @@ fal.ai APIを使ってマルチメディアコンテンツを作成するワー�
 4. `outputs/videos/generated/` に保存
 5. 結果を確認・共有
 
+### 4. 音声付き動画生成
+
+1. 元画像のパスを確認
+2. 動画パラメータ（フレーム数、FPS、カメラ移動等）を確認
+3. `image-to-video-audio.ts` を実行
+4. `outputs/videos/generated/` に保存
+5. 結果を確認・共有
+
 ## スクリプト実行例
 
 ```bash
@@ -86,6 +105,11 @@ node .claude/skills/fal-ai/scripts/edit-image.ts photo.jpg "Make the sky blue"
 
 # 動画生成
 node .claude/skills/fal-ai/scripts/image-to-video.ts photo.jpg --duration 5
+
+# 音声付き動画生成
+node .claude/skills/fal-ai/scripts/image-to-video-audio.ts photo.jpg
+node .claude/skills/fal-ai/scripts/image-to-video-audio.ts photo.jpg --prompt "Camera slowly zooms in" --camera dolly_in
+node .claude/skills/fal-ai/scripts/image-to-video-audio.ts photo.jpg --frames 169 --fps 24 --size landscape_16_9
 ```
 
 ## 出力先

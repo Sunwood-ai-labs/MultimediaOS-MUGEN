@@ -1,19 +1,36 @@
 #!/usr/bin/env tsx
 /**
- * image-to-video.ts
+ * i2v-ltx-2.ts
  *
- * fal.ai ltx-2/image-to-video/fast モデルを使用して画像から動画を生成するスクリプト
+ * MODEL: fal-ai/ltx-2/image-to-video/fast
+ * TYPE: Image to Video (I2V)
+ *
+ * 画像から動画を生成するスクリプト
  * 生成された動画は outputs/videos/generated/ に保存されます
  *
  * 使用方法:
- *   node image-to-video.ts input.jpg
- *   node image-to-video.ts input.png --duration 5 --fps 24
+ *   node i2v-ltx-2.ts input.jpg
+ *   node i2v-ltx-2.ts input.png --duration 8 --fps 25
+ *
+ * パラメータ制約:
+ *   入力画像: ローカルファイル または URL
+ *   --duration: 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 のみ (デフォルト: 4.0だが上記のみ有効)
+ *   --fps: 25 | 50 のみ (デフォルト: 24だが上記のみ有効)
+ *   --motion: 0.0-10.0 (デフォルト: 1.0)
+ *
+ * 重要: duration と fps は特定の値のみ受け付けます
+ *   - duration: 6/8/10/12/14/16/18/20秒
+ *   - fps: 25/50
  */
 
 import { fal } from "@fal-ai/client";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+// .envファイルを読み込む
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
