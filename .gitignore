@@ -51,3 +51,6 @@ projects/*/
 *.tmp
 *.temp
 .cache/
+
+# Claude Code outputs
+.claude/outputs/
