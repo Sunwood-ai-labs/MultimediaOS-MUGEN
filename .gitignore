@@ -54,3 +54,6 @@ projects/*/
 
 # Claude Code outputs
 .claude/outputs/
+
+.SourceSageAssets/Repository_summary.md
+.claude/skills/fal-ai-add/scripts/pnpm-lock.yaml
