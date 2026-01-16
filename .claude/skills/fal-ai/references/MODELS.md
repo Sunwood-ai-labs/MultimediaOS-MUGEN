@@ -215,6 +215,78 @@
 
 ---
 
+## 5. Ideogram V3 (画像生成)
+
+**モデルID**: `fal-ai/ideogram/v3`
+
+**機能**: 高品質な画像、ポスター、ロゴを生成。優れたタイポグラフィ処理とリアルな出力に最適化されており、商用およびクリエイティブ用途に適しています。
+
+### 入力パラメータ
+
+| パラメータ | 型 | デフォルト | 説明 |
+|-----------|------|-----------|------|
+| `prompt` | string | 必須 | 画像生成のためのプロンプト |
+| `negative_prompt` | string | `""` | ネガティブプロンプト |
+| `image_size` | ImageSize | `square_hd` | 生成画像のサイズ |
+| `style` | StyleEnum | - | スタイルタイプ (`AUTO`, `GENERAL`, `REALISTIC`, `DESIGN`) |
+| `style_preset` | StylePresetEnum | - | スタイルプリセット（下記参照） |
+| `rendering_speed` | RenderingSpeedEnum | `"BALANCED"` | レンダリング速度 (`TURBO`, `BALANCED`, `QUALITY`) |
+| `num_images` | integer | 1 | 生成する画像数 |
+| `seed` | integer | ランダム | 乱数シード |
+| `expand_prompt` | boolean | true | MagicPromptを使用するかどうか |
+
+### image_size の値
+
+- `square_hd`: 正方形（高解像度）
+- `square`: 正方形
+- `portrait_4_3`: 縦長 4:3
+- `portrait_16_9`: 縦長 16:9
+- `landscape_4_3`: 横長 4:3
+- `landscape_16_9`: 横長 16:9
+
+カスタムサイズも指定可能:
+```json
+{
+  "image_size": {
+    "width": 1280,
+    "height": 720
+  }
+}
+```
+
+### style の値
+
+- `AUTO`: 自動
+- `GENERAL`: 一般的なスタイル
+- `REALISTIC`: リアルなスタイル
+- `DESIGN`: デザイン重視のスタイル
+
+### style_preset の値
+
+`80S_ILLUSTRATION`, `90S_NOSTALGIA`, `ABSTRACT_ORGANIC`, `ANALOG_NOSTALGIA`, `ART_BRUT`, `ART_DECO`, `ART_POSTER`, `AURA`, `AVANT_GARDE`, `BAUHAUS`, `BLUEPRINT`, `BLURRY_MOTION`, `BRIGHT_ART`, `C4D_CARTOON`, `CHILDRENS_BOOK`, `COLLAGE`, `COLORING_BOOK_I`, `COLORING_BOOK_II`, `CUBISM`, `DARK_AURA`, `DOODLE`, `DOUBLE_EXPOSURE`, `DRAMATIC_CINEMA`, `EDITORIAL`, `EMOTIONAL_MINIMAL`, `ETHEREAL_PARTY`, `EXPIRED_FILM`, `FLAT_ART`, `FLAT_VECTOR`, `FOREST_REVERIE`, `GEO_MINIMALIST`, `GLASS_PRISM`, `GOLDEN_HOUR`, `GRAFFITI_I`, `GRAFFITI_II`, `HALFTONE_PRINT`, `HIGH_CONTRAST`, `HIPPIE_ERA`, `ICONIC`, `JAPANDI_FUSION`, `JAZZY`, `LONG_EXPOSURE`, `MAGAZINE_EDITORIAL`, `MINIMAL_ILLUSTRATION`, `MIXED_MEDIA`, `MONOCHROME`, `NIGHTLIFE`, `OIL_PAINTING`, `OLD_CARTOONS`, `PAINT_GESTURE`, `POP_ART`, `RETRO_ETCHING`, `RIVIERA_POP`, `SPOTLIGHT_80S`, `STYLIZED_RED`, `SURREAL_COLLAGE`, `TRAVEL_POSTER`, `VINTAGE_GEO`, `VINTAGE_POSTER`, `WATERCOLOR`, `WEIRD`, `WOODBLOCK_PRINT`
+
+### rendering_speed の値
+
+- `TURBO`: 最速（品質はやや低下）
+- `BALANCED`: バランス型
+- `QUALITY`: 最高品質（時間がかかる）
+
+### プロンプトの例
+
+```
+"The Bone Forest stretched across the horizon, its trees fashioned from the ossified remains of ancient leviathans that once swam through the sky. Shamans with antlers growing from their shoulders and eyes that revealed the true nature of any being they beheld conducted rituals to commune with the spirits that still inhabited the calcified grove. In sky writes \"Ideogram V3 in fal.ai\""
+
+"Logo design for a coffee shop, minimalist style"
+
+"Vintage travel poster of Paris, art deco style"
+
+"Typography poster with inspirational quote"
+
+"Product photography of a luxury watch, studio lighting"
+```
+
+---
+
 ## 使用例
 
 ### 画像生成
@@ -271,6 +343,21 @@ const result = await fal.subscribe("fal-ai/ltx-2-19b/distilled/image-to-video/lo
       path: "",
       scale: 1
     }]
+  }
+});
+```
+
+### Ideogram V3 画像生成
+
+```javascript
+const result = await fal.subscribe("fal-ai/ideogram/v3", {
+  input: {
+    prompt: "Logo design for a coffee shop, minimalist style",
+    image_size: "square_hd",
+    style: "DESIGN",
+    style_preset: "FLAT_VECTOR",
+    rendering_speed: "BALANCED",
+    expand_prompt: true
   }
 });
 ```
